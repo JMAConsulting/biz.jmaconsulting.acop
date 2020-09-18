@@ -150,7 +150,7 @@ function acop_civicrm_themes(&$themes) {
  */
 function acop_civicrm_validateForm($formName, &$fields, &$files, &$form, &$errors) {
   if ($formName === 'CRM_Contribute_Form_Contribution_Main' && $form->getVar('_id') == '2') {
-    if (empty($fields['price_5') && empty($fields['price_14']) && empty($fields['price_10']) && empty($fields['price_13']) && empty($fields['price_12'])) {
+    if (empty($fields['price_5']) && empty($fields['price_14']) && empty($fields['price_10']) && empty($fields['price_13']) && empty($fields['price_12'])) {
       $errors['price_5'] = E::ts('You Must Select at least one membership option');
     }
   }
