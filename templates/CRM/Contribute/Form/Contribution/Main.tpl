@@ -74,7 +74,6 @@
     <div id="intro_text" class="crm-public-form-item crm-section intro_text-section">
       {$intro_text}
     </div>
-    {include file="CRM/common/cidzero.tpl"}
     {if $islifetime or $ispricelifetime}
       <div class="help">{ts}You have a current Lifetime Membership which does not need to be renewed.{/ts}</div>
     {/if}
