@@ -143,6 +143,17 @@ function acop_civicrm_themes(&$themes) {
   _acop_civix_civicrm_themes($themes);
 }
 
+function acop_civicrm_alterReportVar($type, &$columns, &$form) {
+  if ('CRM_Report_Form_Contribute_Summary' == get_class($form) && $type == 'columns') {
+    $columns['civicrm_contribution']['filters']['payment_instrument_id'] = [
+      'title' => ts('Payment Method'),
+      'operatorType' => CRM_Report_Form::OP_MULTISELECT,
+      'options' => CRM_Contribute_BAO_Contribution::buildOptions('payment_instrument_id', 'search'),
+      'type' => CRM_Utils_Type::T_INT,
+    ];
+  }
+}
+
 /**
  * Implements hook_civicrm_validateForm().
  *
