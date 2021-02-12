@@ -176,6 +176,12 @@ function acop_civicrm_buildForm($formName, &$form) {
   if ($formName === 'CRM_Contribute_Form_Contribution_Main' && $form->getVar('_id') == '2') {
     Civi::resources()->addScriptFile('biz.jmaconsulting.acop', 'js/acop_membership_form.js');
   }
+  if ($formName == 'CRM_Batch_Form_Entry' && ($form->_action & CRM_Core_Action::ADD)) {
+    $totalItems = $form->getVar('_batchInfo')['item_count'];
+    for ($i = 1; $i <= $totalItems; $i++) {
+      $form->setDefaults(["field[$i][custom_83]" => 0]);	    
+    }    
+  }
 }
 
 // --- Functions below this ship commented out. Uncomment as required. ---
