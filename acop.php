@@ -176,11 +176,26 @@ function acop_civicrm_buildForm($formName, &$form) {
   if ($formName === 'CRM_Contribute_Form_Contribution_Main' && $form->getVar('_id') == '2') {
     Civi::resources()->addScriptFile('biz.jmaconsulting.acop', 'js/acop_membership_form.js');
   }
-  if ($formName == 'CRM_Batch_Form_Entry' && ($form->_action & CRM_Core_Action::ADD)) {
-    $totalItems = $form->getVar('_batchInfo')['item_count'];
-    for ($i = 1; $i <= $totalItems; $i++) {
-      $form->setDefaults(["field[$i][custom_83]" => 0]);	    
-    }    
+  if ($formName == 'CRM_Batch_Form_Entry') {
+    if ($form->_action & CRM_Core_Action::ADD) {
+      $totalItems = $form->getVar('_batchInfo')['item_count'];
+      for ($i = 1; $i <= $totalItems; $i++) {
+        $form->setDefaults(["field[$i][custom_83]" => 0]);	    
+      }
+      CRM_Core_Resources::singleton()->addScript(
+        "CRM.$(function($) {
+          var totalItems=". $form->getVar('_batchInfo')['item_count'].";
+          for (i=1;i<=totalItems;i++) {
+            $('#soft_credit_type_' + i).val(1);
+          }
+        });
+      ");
+    }
+    CRM_Core_Resources::singleton()->addScript(
+        "CRM.$(function($) {
+          $('.crm-form-time').hide();
+        });
+    ");
   }
 }
 
