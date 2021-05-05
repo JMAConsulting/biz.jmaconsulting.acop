@@ -152,6 +152,13 @@ function acop_civicrm_alterReportVar($type, &$columns, &$form) {
       'type' => CRM_Utils_Type::T_INT,
     ];
   }
+  if ('CRM_Report_Form_Contribute_Detail' == get_class($form) && $type == 'sql' && !empty($form->getVar('_where'))) {
+    $customFieldName = 'custom_' . civicrm_api3('CustomField', 'getValue', ['name' => 'Do_you_wish_your_donation_to_be_anonymous_', 'return' => 'id']);
+    $tableName = civicrm_api3('CustomGroup', 'getValue', ['name' => 'Anonymous_Donation', 'return' => 'table_name']);
+    $dbAlias = $form->getVar('_columns')[$tableName][$customFieldName]['dbAlias'];
+    $where = str_replace("{$dbAlias} = 0", "{$dbAlias} != 1", $form->getVar('_where'));
+    $form->setVar('_where', $where);
+  }
 }
 
 /**
